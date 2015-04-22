@@ -10,16 +10,19 @@ DICOM image reader C++ library for OpenCV2
 
 + OpenCV2
 + Boost
-
++ Doxygen for building API document
 
 ## How to use
 
 Just include "dicom.h" in your source.
 See dicom_test.cc for brief usage.
 
-## API
+### Generating API documents
 
-TBW
+Once you run doxygen, you will find documents under html/ directory.
+
+    $ doxygen Doxyfile
+
 
 ## License
 
