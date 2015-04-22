@@ -15,7 +15,7 @@ DICOM image reader C++ library for OpenCV2
 ## How to use
 
 Just include "dicom.h" in your source.
-See dicom_test.cc.
+See dicom_test.cc for brief usage.
 
 ## API
 
@@ -23,10 +23,8 @@ TBW
 
 ## License
 
-Copyright (c) 2014 NISHI, Takao <zophos@ni.aist.go.jp> AIST
+Copyright (c) 2015 NISHI, Takao <zophos@ni.aist.go.jp> AIST
 All rights reserved.
-
-This is free software with ABSOLUTELY NO WARRANTY.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
