@@ -1,6 +1,6 @@
 // -*- c++ -*-
 //
-// Time-stamp: <2015-02-23 16:50:50 zophos>
+// Time-stamp: <2018-11-01 09:18:40 zophos>
 //
 ///
 /// @file   dicom.h
@@ -15,7 +15,63 @@
 #define __VVV_DICOM_H__
 
 #include <stdint.h>
+
+//
+// based on Stack Overflow
+// "Cross-platform definition of _byteswap_uint64 and _byteswap_ulong"
+// https://stackoverflow.com/questions/41770887/cross-platform-definition-of-byteswap-uint64-and-byteswap-ulong
+//
+#ifdef _MSC_VER
+
+#include <stdlib.h>
+#define bswap_16(x) _byteswap_ushort(x)
+#define bswap_32(x) _byteswap_ulong(x)
+#define bswap_64(x) _byteswap_uint64(x)
+
+#elif defined(__APPLE__)
+
+// Mac OS X / Darwin features
+#include <libkern/OSByteOrder.h>
+#define bswap_16(x) OSSwapInt16(x)
+#define bswap_32(x) OSSwapInt32(x)
+#define bswap_64(x) OSSwapInt64(x)
+
+#elif defined(__sun) || defined(sun)
+
+#include <sys/byteorder.h>
+#define bswap_16(x) BSWAP_16(x)
+#define bswap_32(x) BSWAP_32(x)
+#define bswap_64(x) BSWAP_64(x)
+
+#elif defined(__FreeBSD__)
+
+#include <sys/endian.h>
+#define bswap_16(x) bswap16(x)
+#define bswap_32(x) bswap32(x)
+#define bswap_64(x) bswap64(x)
+
+#elif defined(__OpenBSD__)
+
+#include <sys/types.h>
+#define bswap_16(x) swap16(x)
+#define bswap_32(x) swap32(x)
+#define bswap_64(x) swap64(x)
+
+#elif defined(__NetBSD__)
+
+#include <sys/types.h>
+#include <machine/bswap.h>
+#if defined(__BSWAP_RENAME) && !defined(__bswap_32)
+#define bswap_16(x) bswap16(x)
+#define bswap_32(x) bswap32(x)
+#define bswap_64(x) bswap64(x)
+#endif
+
+#else
+
 #include <byteswap.h>
+
+#endif
 
 #include <string.h>
 
@@ -411,7 +467,7 @@ namespace VVV
                         throw StreamError("");
                 
 #ifdef DEBUG
-                fprintf(stderr,"%u\n",sz);
+                fprintf(stderr,"%u\n",(uint16_t)sz);
 #endif
                 
                 //
